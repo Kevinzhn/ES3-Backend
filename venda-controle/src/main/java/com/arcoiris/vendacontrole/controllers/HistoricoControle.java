@@ -34,7 +34,7 @@ public class HistoricoControle {
         this.historicoRepositorio = historicoRepositorio;
         this.itemCarrinhoRepositorio = itemCarrinhoRepositorio;
     }
-
+    //Confirmar uma compra
     @PostMapping("/carrinho/{cpf}/confirmar/")
     public ResponseEntity<Object> confirmarCompraEntity(@PathVariable("cpf") String cpf) {
         Optional<UsuarioModelo> usuarioO = usuarioRepositorio.findById(cpf);
@@ -61,7 +61,7 @@ public class HistoricoControle {
         carrinhoRepositorio.save(carrinhoModelo);
         return ResponseEntity.status(HttpStatus.OK).body(pedidoModelo);
     }
-
+    //Mostrar histórico
     @GetMapping("/historico/{cpf}/")
     public ResponseEntity<Object> getHistorico(@PathVariable("cpf") String cpf) {
         Optional<UsuarioModelo> usuarioO = usuarioRepositorio.findById(cpf);
