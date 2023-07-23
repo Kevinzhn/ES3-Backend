@@ -34,14 +34,14 @@ public class ProdutoControle {
 	public ProdutoControle(ProdutoRepositorio produtoRepositorio) {
 		this.produtoRepositorio = produtoRepositorio;
 	}
-
+	//Adicionar um produto
 	@PostMapping("/produto")
 	public ResponseEntity<ProdutoModelo> saveProduto(@RequestBody @Valid ProdutoDto produtoDto) {
 		var produtoModelo = new ProdutoModelo();
 		BeanUtils.copyProperties(produtoDto, produtoModelo);
 		return ResponseEntity.status(HttpStatus.CREATED).body(produtoRepositorio.save(produtoModelo));
 	}
-
+	//Listar todos os produtos
 	@GetMapping("/produto")
 	public ResponseEntity<List<ProdutoModelo>> getAllProduto() {
 		List<ProdutoModelo> produtoLista = produtoRepositorio.findAll();
@@ -54,7 +54,7 @@ public class ProdutoControle {
 
 		return ResponseEntity.status(HttpStatus.OK).body(produtoLista);
 	}
-
+	//Mostrar um produto
 	@GetMapping("/produto/{id}")
 	public ResponseEntity<Object> getOneProduto(@PathVariable(value = "id") UUID id) {
 		Optional<ProdutoModelo> produto0 = produtoRepositorio.findById(id);
@@ -64,7 +64,7 @@ public class ProdutoControle {
 		produto0.get().add(linkTo(methodOn(ProdutoControle.class).getAllProduto()).withRel("Lista de produto"));
 		return ResponseEntity.status(HttpStatus.OK).body(produto0.get());
 	}
-
+	//Atualizar um produto
 	@PutMapping("/produto/{id}")
 	public ResponseEntity<Object> updateProduto(@PathVariable(value = "id") UUID id,
 			@RequestBody @Valid ProdutoDto produtoDto) {
@@ -77,7 +77,7 @@ public class ProdutoControle {
 		BeanUtils.copyProperties(produtoDto, produtoModelo);
 		return ResponseEntity.status(HttpStatus.CREATED).body(produtoRepositorio.save(produtoModelo));
 	}
-
+	//Deletar um produto
 	@DeleteMapping("/produto/{id}")
 	public ResponseEntity<Object> deleteProduto(@PathVariable(value = "id") UUID id) {
 		Optional<ProdutoModelo> produto0 = produtoRepositorio.findById(id);
