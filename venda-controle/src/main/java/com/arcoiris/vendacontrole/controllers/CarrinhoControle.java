@@ -44,7 +44,7 @@ public class CarrinhoControle {
 		this.usuarioRepositorio = usuarioRepositorio;
 		this.itemCarrinhoRepositorio = itemCarrinhoRepositorio;
 	}
-
+	//adicionar item ao carrinho
 	@PostMapping("/carrinho/{cpf}/adicionaritem/")
 	public ResponseEntity<String> adicionarItemAoCarrinho(@PathVariable("cpf") String cpf,
 			@RequestBody @Valid ItemCarrinhoDto itemCarrinhoDto) {
@@ -65,7 +65,7 @@ public class CarrinhoControle {
 		carrinhoServico.adicionarItem(carrinhoModelo, produtoOptional.get(), itemCarrinhoModelo.getQuantidade());
 		return ResponseEntity.ok("Item adicionado ao carrinho com sucesso.");
 	}
-
+	//Listar carrinho
 	@GetMapping("/carrinho/{cpf}/")
 	public ResponseEntity<Object> mostrarCarrinho(@PathVariable("cpf") String cpf) {
 		Optional<UsuarioModelo> usuariOptional = usuarioRepositorio.findById(cpf);
@@ -75,7 +75,7 @@ public class CarrinhoControle {
 		Optional<CarrinhoModelo> carrinhoO = carrinhoRepositorio.findByCpf(cpf);
 		return ResponseEntity.status(HttpStatus.OK).body(carrinhoO.get().getItens());
 	}
-
+	//Atualiar item
 	@PutMapping("/carrinho/{cpf}/atualizarItem")
 	public ResponseEntity<Object> updateItem(@PathVariable("cpf") String cpf,
 			@RequestBody @Valid ItemCarrinhoDto itemCarrinhoDto) {
@@ -98,7 +98,7 @@ public class CarrinhoControle {
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item a ser modificado não está no carrinho!");
 	}
-
+	//Deletar item
 	@DeleteMapping("/carrinho/{cpf}/deletarItem")
 	public ResponseEntity<Object> deleteItem(@PathVariable("cpf") String cpf,
 			@RequestBody @Valid ItemCarrinhoDto itemCarrinhoDto) {
@@ -121,7 +121,7 @@ public class CarrinhoControle {
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item a ser deletado não está no carrinho!");
 	}
-
+	//Esvaziar carrinho
 	@DeleteMapping("/carrinho/{cpf}/esvaziarCarrinho")
 	public ResponseEntity<Object> deleteAllItem(@PathVariable("cpf") String cpf) {
 		Optional<UsuarioModelo> usuariOptional = usuarioRepositorio.findById(cpf);
