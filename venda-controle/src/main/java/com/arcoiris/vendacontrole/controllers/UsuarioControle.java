@@ -42,7 +42,7 @@ public class UsuarioControle {
 		this.carrinhoRepositorio = carrinhoRepositorio;
 		this.historicoRepositorio = historicoRepositorio;
 	}
-
+	//Adicionar um usuário
 	@PostMapping("/usuario")
 	public ResponseEntity<UsuarioModelo> saveUser(@RequestBody @Valid UsuarioDto usuarioDto) {
 		var usuarioModelo = new UsuarioModelo();
@@ -58,7 +58,7 @@ public class UsuarioControle {
 		usuarioRepositorio.save(usuarioModelo);
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioModelo);
 	}
-
+	//Listar todos os usuários
 	@GetMapping("/usuario")
 	public ResponseEntity<java.util.List<UsuarioModelo>> getAllUsuario() {
 		List<UsuarioModelo> usuarioLista = usuarioRepositorio.findAll();
@@ -70,7 +70,7 @@ public class UsuarioControle {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(usuarioLista);
 	}
-
+	//Mostrar um usuário
 	@GetMapping("/usuario/{cpf}")
 	public ResponseEntity<Object> getOneUsuario(@PathVariable(value = "cpf") String cpf) {
 		Optional<UsuarioModelo> usuario0 = usuarioRepositorio.findById(cpf);
@@ -80,7 +80,7 @@ public class UsuarioControle {
 		usuario0.get().add(linkTo(methodOn(UsuarioControle.class).getAllUsuario()).withRel("Lista de usuario"));
 		return ResponseEntity.status(HttpStatus.OK).body(usuario0.get());
 	}
-
+	//Atualizar um usuário
 	@PutMapping("/usuario/{cpf}")
 	public ResponseEntity<Object> updateUsuario(@PathVariable(value = "cpf") String cpf,
 			@RequestBody @Valid UsuarioDto usuarioDto) {
@@ -93,7 +93,7 @@ public class UsuarioControle {
 		BeanUtils.copyProperties(usuarioDto, usuarioModelo);
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioRepositorio.save(usuarioModelo));
 	}
-
+	//Deletar um usuário
 	@DeleteMapping("/usuario/{cpf}")
 	public ResponseEntity<Object> deleteUsuario(@PathVariable(value = "cpf") String cpf) {
 		Optional<UsuarioModelo> usuario0 = usuarioRepositorio.findById(cpf);
